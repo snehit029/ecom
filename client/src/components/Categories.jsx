@@ -14,6 +14,7 @@ ${mobile({ padding: "0px", flexDirection:"column" })}
 const Categories = () => {
   return (
     <Container>
+      
         {categories.map((item) =>(
             <CategoriesItem item={item} key={item.id}/>
         ))}

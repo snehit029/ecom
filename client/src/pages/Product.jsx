@@ -7,7 +7,7 @@ import Annoucement from '../components/Annoucement'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
-import { addProduct } from '../redux/cartRedux'
+import { addToCart } from '../redux/cartRedux'
 import { useDispatch } from 'react-redux'
 import { publicRequest } from '../RequestMethod'
 import { mobile } from '../responsive'
@@ -20,6 +20,7 @@ ${mobile({ padding: "10px", flexDirection:"column" })}
 `;
 const ImgContainer = styled.div`
 flex: 1`;
+
 const Image = styled.img`
 width: 100%;
 height: 75vh;
@@ -113,7 +114,7 @@ const Button = styled.button`
 
 const Product = () => {
   const location = useLocation();
-  const id =location.pathname.split('/')[2];
+  const ids =location.pathname.split('/')[2];
 
   const[product,setProduct] = useState({})
   const [quantity,setQuantity] = useState(1)
@@ -124,12 +125,12 @@ const Product = () => {
   useEffect(() => {
   const getProduct = async ()=>{
     try{
-       const res = await publicRequest.get('/products/find/'+id)
+       const res = await publicRequest.get('/products/find/'+ids)
        setProduct(res.data);
     } catch{}
   }
   getProduct()
-  }, [id])
+  }, [ids])
 
   const handleQuantity=(type)=>{
    if(type === 'desc'){
@@ -138,11 +139,11 @@ const Product = () => {
     setQuantity(quantity + 1);
    }
   }
+  const {_id, title, img , price, desc} = product
   
   const CartHandler = ()=>{
     dispatch(
-      addProduct({ ...product, quantity, color, size})
-
+      addToCart({...product})
     );
   }
 
@@ -152,12 +153,13 @@ const Product = () => {
         <Annoucement />
         <Wrapper>
             <ImgContainer>
-            <Image src={product.img} />
+            <Image src={img} />
             </ImgContainer>
             <InfoContainer>
-                <Title> {product.title}</Title>
-                <Desc>{product.desc}</Desc>
-          <Price>Rs.{product.price}</Price>
+                <Title> {title}</Title>
+                <span> Id:{_id}</span>
+                <Desc>{desc}</Desc>
+          <Price>Rs.{price}</Price>
 
             <FilterContainer>
                 <Filter>
@@ -168,7 +170,7 @@ const Product = () => {
                 </Filter>
 
                 <Filter>
-              <FilterTitle>Size</FilterTitle>
+              <FilterTitle> Size </FilterTitle>
               <FilterSize onChange={(e)=>setSize(e.target.value)}>
 
               {product.size?.map((s)=>(

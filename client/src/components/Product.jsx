@@ -65,11 +65,11 @@ transition: all 0.5s ease;
 }
 `
 
-const Product = ({item}) => {
+const Product = ({item, id}) => {
   return (
     <Container>
         <Cirle />
-        <Image src={item.img}/>
+        <Image key={id} src={item.img}/>
         <Info>
             <Icon><ShoppingCartOutlined /></Icon>
             <Icon>

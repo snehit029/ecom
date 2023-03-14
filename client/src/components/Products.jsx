@@ -9,7 +9,7 @@ flex-wrap: wrap;
 justify-content: space-between;
 `
 
-const Products = ({cate,filters,sort}) => {
+const Products = ({category,filters,sort}) => {
   
   const[products,setProducts] = useState([])
   
@@ -17,21 +17,21 @@ const Products = ({cate,filters,sort}) => {
 
   useEffect(() => {
     const getProducts = async ()=>{
-      try{
-        const res = await axios.get(cate ?`http://localhost:5000/api/products?category=${cate}` : "http://localhost:5000/api/products" );
+      try{ 
+        const res = await axios.get(category ?`http://localhost:5000/api/products?category=${category}` :"http://localhost:5000/api/products" );
         setProducts(res.data);
       }catch (err){}
     }
     getProducts()
-  }, [cate])
+  }, [category])
   
   useEffect(() => {
-   cate && setFilteredProducts(
+   category && setFilteredProducts(
     products.filter(item=> Object.entries(filters).every(([key,value])=>
     item[key].includes(value)))
    )
 
-  }, [products,cate,filters])
+  }, [products,category,filters])
 
   useEffect(() => {
     if(sort === "newest"){
@@ -50,10 +50,10 @@ const Products = ({cate,filters,sort}) => {
 
   return (
     <Container>
-        { cate ? filteredProducts.map((item)=>(
-            <Product item = {item} key={item.id}/>
-      )) : products.slice(0,8).map((item)=>(
-        <Product item = {item} key={item.id}/>))
+        { category ? filteredProducts.map((item, id)=>(
+            <Product item = {item} key={id}/>
+      )) : products.slice(0,8).map((item, id)=>(
+        <Product item = {item} key={id}/>))
     }
     </Container>
   )

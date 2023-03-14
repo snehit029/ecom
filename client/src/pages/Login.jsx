@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { reset, login } from '../redux/userRedux';
 import { mobile } from '../responsive';
@@ -45,7 +45,7 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 40%;
+  width: 100%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
@@ -58,24 +58,28 @@ const Button = styled.button`
   }
 `;
 
-const Link = styled.a`
+const Line = styled.div`
+  width: 100%;
   margin: 5px 0px;
   font-size: 12px;
-  text-decoration: underline;
   cursor: pointer;
 `;
+
+const Span = styled.span`
+font-weight: bold;
+margin-left: 10px;
+`;
+
 
 const Error = styled.span`
   color:red;
 `
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  })
+  const [email,setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { email, password } = formData
+   const formData = { email, password }
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -96,8 +100,6 @@ const Login = () => {
     dispatch(reset())
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-
-
   const handleClick = (e) =>{
     e.preventDefault();
     const userData = {
@@ -114,13 +116,22 @@ const Login = () => {
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          <Input placeholder="email" onChange={(e)=>setFormData({...formData, email: e.target.value})} />
-          <Input placeholder="password" 
+          <Input value={email} placeholder="email"  onChange={(e)=>setEmail( e.target.value)} />
+          <Input value={password} placeholder="password" 
           type='password'
-          onChange={(e)=>setFormData({...formData, password: e.target.value})} />
+          onChange={(e)=>setPassword(e.target.value)} />
           <Button onClick={handleClick}>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
+          <Line>Email: "jack@gmail.com"
+            Password: "jack"
+          </Line>
+          <Link to="/register">
+           <Line >CREATE A NEW ACCOUNT?
+            <Span>
+           RESGISTER
+          </Span>
+          </Line>
+          </Link>
+
         </Form>
       </Wrapper>
     </Container>

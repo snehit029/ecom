@@ -9,6 +9,7 @@ import  Login from './pages/Login'
 import Register from './pages/Register'
 import Success from './pages/Success'
 import { useSelector } from 'react-redux'
+import ProductPage from './pages/ProductPage'
 
 
 
@@ -33,6 +34,7 @@ const App = () => {
         <Route path='/register' element={<Register />} />
 
         <Route exact path='/' element={<Home />} />
+        <Route path="/products" element={<ProductPage />} />
       
       </Routes>
   )

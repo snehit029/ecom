@@ -7,10 +7,11 @@ import Announcement from '../components/Annoucement'
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useEffect } from "react";
 import {userRequest} from '../RequestMethod'
 import { payment } from "../redux/userRedux.js"
+import { addToCart, clearCart, decrementQuantity, getTotals, incrementQuantity, removeItem } from "../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -172,9 +173,32 @@ const Cart = () => {
     setStripeToken(token)
   };
 
+  useEffect(()=>{
+      dispatch(getTotals());
+  }, [cart])
+
+  const handleRemoveFromCart = (item) =>{
+    dispatch(removeItem(item));
+  }
+
+  const handleDecreaseCart = (item)=>{
+     dispatch(decrementQuantity(item));
+  }
+
+  const handleIncreaseCart = (item) =>{
+    dispatch(incrementQuantity(item));
+  }
+
+  const clearCartHandler = () =>{
+    dispatch(clearCart())
+  }
+
  const pay = () =>{
     dispatch(payment(cart));
  }
+
+ 
+
   return (
     <Container>
       <Navbar />
@@ -182,39 +206,49 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
+          <TopButton onClick={navigate("/products")}>CONTINUE SHOPPING</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(0)</TopText>
             <TopText>Your Wishlist (0)</TopText>
           </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
+          <TopButton  onClick={clearCartHandler}>CLEAR CART</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map(product=>(
+            {cart.cartItems.map((item,i)=>(
             <Product>
               <ProductDetail>
-                <Image src={product.img} />
+                <Image  src={item.img} />
                 <Details>
                   <ProductName>
-                    <b>Product:</b> {product.title}
+                    <b>Product:</b> {item.title}
                   </ProductName>
                   <ProductId>
-                    <b>ID:</b> {product.id}
+                    <b>ID:</b> {item._id}
                   </ProductId>
-                  <ProductColor color={product.color} />
+                  <ProductColor color={item.color} />
                   <ProductSize>
-                    <b>Size:</b> {product.size}
+                    <b>Size:</b> {item.size}
                   </ProductSize>
+                  
                 </Details>
               </ProductDetail>
+             
               <PriceDetail>
-                <ProductAmountContainer>
-                  <Add />
-                  <ProductAmount>{product.quantity}</ProductAmount>
-                  <Remove />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" 
+              className="w-5 h-5" width={35} onClick={()=> handleRemoveFromCart(item)} cursor="pointer">
+           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            
+            </svg>
+
+              <ProductAmountContainer>
+                  <span>Quantity </span>
+                  <Remove  cursor="pointer"  onClick = {()=> handleDecreaseCart(item)}/>
+                  <ProductAmount>{item.cartQuantity}</ProductAmount>
+                  <Add  cursor="pointer" onClick ={()=> handleIncreaseCart(item)}/>
+
                 </ProductAmountContainer>
-                <ProductPrice>{product.price*product.quantity}</ProductPrice>
+                <ProductPrice>Price: Rs.{item.price * item.cartQuantity}</ProductPrice>
               </PriceDetail>
             </Product>))}
             <Hr />
@@ -225,7 +259,7 @@ const Cart = () => {
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>Rs. {cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>Rs. {cart.cartTotalAmount}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -237,7 +271,7 @@ const Cart = () => {
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
+              <SummaryItemPrice>{cart.cartTotalAmount}</SummaryItemPrice>
             </SummaryItem>
             {user ? ( <PayButton cart = {cart} cartItems={cart.products} onClick={pay}/>) : (<Button onClick={()=> navigate('/login')}>Login to Checkout</Button>)}
           

@@ -1,11 +1,12 @@
 import { Badge } from '@material-ui/core';
-import { Search, ShoppingCartOutlined } from '@material-ui/icons';
+import {  ShoppingCartOutlined } from '@material-ui/icons';
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { mobile } from '../responsive';
 import { logout, reset } from '../redux/userRedux';
+import { selectTotalQTY } from '../redux/cartRedux';
 
 const Container = styled.div`
   height: 60px;
@@ -25,26 +26,6 @@ const Left = styled.div`
   display: flex;
   align-items: center;
 `;
-
-const Language = styled.span`
-  font-size: 14px;
-  cursor: pointer;
-  ${mobile({ display: "none" })}
-`;
-
-const SearchContainer = styled.div`
-  border: 0.5px solid lightgray;
-  display: flex;
-  align-items: center;
-  margin-left: 25px;
-  padding: 5px;
-`;
-
-const Input = styled.input`
-  border: none;
-  ${mobile({ width: "50px" })}
-`;
-
 const Center = styled.div`
   flex: 1;
   text-align: center;
@@ -75,7 +56,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const quantity = useSelector(state=>state.cart.quantity)
 
   const {user} = useSelector((state)=> state.auth) 
   const onLogout = () => {
@@ -84,17 +64,22 @@ const Navbar = () => {
     navigate('/')
   }
 
+ 
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
 
   return (
     <Container>
         <Wrapper>
-            <Left><SearchContainer>
-             <Input />
-             <Search />
-            </SearchContainer>
+            <Left>
                 
             </Left>
-            <Center><Logo>SPECTER</Logo></Center>
+            <Link to="/">
+            <Center >
+              <Logo >
+                SPECTER
+                </Logo>
+                </Center>
+                </Link>
          <Right>
           {user ? (<span onClick={onLogout}>{user.username}</span>) :
           (<><Link to='/register'><MenuItem>
@@ -103,10 +88,9 @@ const Navbar = () => {
             <MenuItem>LOG IN</MenuItem>
             </Link></>)}
             
-            <Language>EN</Language>
             <Link to='/cart'>
             <MenuItem>
-            <Badge badgeContent={quantity} color="primary" overlap='rectangular' >
+            <Badge badgeContent={cartTotalQuantity} color="primary" overlap='rectangular' >
             <ShoppingCartOutlined />
             </Badge>
            </MenuItem>

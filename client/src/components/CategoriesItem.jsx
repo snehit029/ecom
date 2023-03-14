@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Container = styled.div`
 flex: 1;
@@ -38,13 +39,17 @@ font-weight: 600;
 `
 
 const CategoriesItem = ({item}) => {
+  const handleClick = () =>{
+    <Navigate to="/products" />
+  }
   return (
     <Container>
-      <Link to={`/products/${item.cate}`}>
+      <Link to={`/products/${item.category}`}>
         <Image src={item.img} />
         <Info>
             <Title>{item.title}</Title>
-            <Button>Shop Now</Button>
+            
+            <Button onClick={handleClick}>Shop Now</Button>
         </Info>
         </Link>
     </Container>
