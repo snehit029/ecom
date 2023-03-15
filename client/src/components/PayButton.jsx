@@ -15,7 +15,7 @@ const PayButton = ({ cartItems }) => {
   const user = useSelector((state) => state.auth);
 
   const handleCheckout = () => {
-    axios.post("http://localhost:5000/api/stripe/create-checkout-session"
+    axios.post("https://mern-ecomm-43hi.onrender.com/api/stripe/create-checkout-session"
     , 
       {
         cartItems,
