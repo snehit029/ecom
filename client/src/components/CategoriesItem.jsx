@@ -40,7 +40,7 @@ font-weight: 600;
 
 const CategoriesItem = ({item}) => {
   const handleClick = () =>{
-    <Navigate to="/products" />
+    <Navigate to="https://mern-ecomm-43hi.onrender.com/products" />
   }
   return (
     <Container>

@@ -267,7 +267,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>{cart.cartTotalAmount}</SummaryItemPrice>
             </SummaryItem>
-            {user ? ( <PayButton cart = {cart} cartItems={cart.products} onClick={pay}/>) : (<Button onClick={()=> navigate('/login')}>Login to Checkout</Button>)}
+            {user ? ( <PayButton cart = {cart} cartItems={cart.cartItems} onClick={pay}/>) : (<Button onClick={()=> navigate('/login')}>Login to Checkout</Button>)}
           
           </Summary>
         </Bottom>

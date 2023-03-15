@@ -125,7 +125,11 @@ const Product = () => {
   useEffect(() => {
   const getProduct = async ()=>{
     try{
-       const res = await publicRequest.get('/products/find/'+ids)
+       const res = await publicRequest.get(`
+       https://mern-ecomm-43hi.onrender.com/products/find/ ${ids}
+       `
+        
+       )
        setProduct(res.data);
     } catch{}
   }

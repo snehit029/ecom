@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API_URL = '/api/auth/'
-const pay = 'http://localhost:5000/api/stripe/create-checkout-session'
+const API_URL = 'https://mern-ecomm-43hi.onrender.com/api/auth/'
+const pay = 'https://mern-ecomm-43hi.onrender.com/api/stripe/create-checkout-session'
 
 // Register user
 const register = async (userData) => {
