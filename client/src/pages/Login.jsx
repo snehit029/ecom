@@ -71,20 +71,17 @@ margin-left: 10px;
 `;
 
 
-const Error = styled.span`
-  color:red;
-`
+  
 
 const Login = () => {
   const [email,setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-   const formData = { email, password }
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user,  isError, isSuccess, message } = useSelector(
     (state) => state.auth
   )  
 

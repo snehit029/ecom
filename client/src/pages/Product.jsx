@@ -143,7 +143,7 @@ const Product = () => {
   
   const CartHandler = ()=>{
     dispatch(
-      addToCart({...product})
+      addToCart({...product, color, size})
     );
   }
 
@@ -173,8 +173,8 @@ const Product = () => {
               <FilterTitle> Size </FilterTitle>
               <FilterSize onChange={(e)=>setSize(e.target.value)}>
 
-              {product.size?.map((s)=>(
-                <FilterSizeOption key={s}>{s}</FilterSizeOption>
+              {product.size?.map((size)=>(
+                <FilterSizeOption key={size}>{size}</FilterSizeOption>
               ))}
               </FilterSize>
             </Filter>

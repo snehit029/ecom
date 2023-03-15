@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import { mobile } from '../responsive';
 import { logout, reset } from '../redux/userRedux';
-import { selectTotalQTY } from '../redux/cartRedux';
 
 const Container = styled.div`
   height: 60px;

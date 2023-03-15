@@ -71,10 +71,10 @@ const Register = () => {
   })
   
   
-  const{ user,isError,isLoading, isSuccess,message } = useSelector(
+  const{ user,isError, isSuccess,message } = useSelector(
     (state) => state.auth)
 
-  const { username, email, password, confirmpassword } = formdata
+  const { username, email, password } = formdata
 
   const dispatch = useDispatch();
   

@@ -3,7 +3,6 @@ import jwtDecode from 'jwt-decode'
 import authService from './authService';
  
 // Get user from localStorage
-const Euser = JSON.parse(localStorage.getItem('user'))
 
 
 export const register

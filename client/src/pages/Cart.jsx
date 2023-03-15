@@ -7,13 +7,10 @@ import Announcement from '../components/Annoucement'
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { useCallback, useState } from "react";
 import { useEffect } from "react";
-import {userRequest} from '../RequestMethod'
 import { payment } from "../redux/userRedux.js"
-import { addToCart, clearCart, decrementQuantity, getTotals, incrementQuantity, removeItem } from "../redux/cartRedux";
+import {  clearCart, decrementQuantity, getTotals, incrementQuantity, removeItem } from "../redux/cartRedux";
 
-const KEY = process.env.REACT_APP_STRIPE;
 
 const Container = styled.div``;
 
@@ -165,16 +162,13 @@ const Button = styled.button`
 const Cart = () => {
   const cart = useSelector(state => state.cart)
   const {user} = useSelector((state)=>state.auth)
-  const [stripeToken,setStripeToken]= useState(null);
   
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const onToken = (token) => {
-    setStripeToken(token)
-  };
 
   useEffect(()=>{
       dispatch(getTotals());
+      //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cart])
 
   const handleRemoveFromCart = (item) =>{
