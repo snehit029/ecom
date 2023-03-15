@@ -9,8 +9,8 @@ import Navbar from '../components/Navbar'
 import Newsletter from '../components/Newsletter'
 import { addToCart } from '../redux/cartRedux'
 import { useDispatch } from 'react-redux'
-import { publicRequest } from '../RequestMethod'
 import { mobile } from '../responsive'
+import axios from 'axios'
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -125,11 +125,8 @@ const Product = () => {
   useEffect(() => {
   const getProduct = async ()=>{
     try{
-       const res = await publicRequest.get(`
-       https://mern-ecomm-43hi.onrender.com/products/find/ ${ids}
-       `
-        
-       )
+       const res = await axios.get(`https://mern-ecomm-43hi.onrender.com/api/products/find/${ids}
+       ` )
        setProduct(res.data);
     } catch{}
   }

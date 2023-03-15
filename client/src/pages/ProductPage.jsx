@@ -28,8 +28,8 @@ return (
   <>
     <Navbar />
     <Container>
-     {products.map((item)=>(
-     <Product item = {item} key={item.id}/>
+     {products.map((item, id)=>(
+     <Product item = {item} key={id}/>
      ))}
     </Container>
     </>

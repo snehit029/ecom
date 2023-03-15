@@ -15,8 +15,8 @@ const PayButton = ({ cartItems }) => {
   const user = useSelector((state) => state.auth);
 
   const handleCheckout = () => {
-    axios
-      .post(`https://mern-ecomm-43hi.onrender.com/api/stripe/create-checkout-session`, 
+    axios.post("http://localhost:5000/api/stripe/create-checkout-session"
+    , 
       {
         cartItems,
         userId: user._id,
@@ -31,7 +31,9 @@ const PayButton = ({ cartItems }) => {
 
   return (
     <>
-      <Button onClick={() => handleCheckout()}>Check out</Button>
+      <Button onClick={() => handleCheckout()}>
+      Check out
+      </Button>
     </>
   );
 };

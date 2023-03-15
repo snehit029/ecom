@@ -191,7 +191,9 @@ const Cart = () => {
     dispatch(payment(cart));
  }
 
- 
+ const continueHandler = () =>{
+  navigate("/products")
+ }
 
   return (
     <Container>
@@ -200,7 +202,7 @@ const Cart = () => {
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>
-          <TopButton onClick={navigate("/products")}>CONTINUE SHOPPING</TopButton>
+          <TopButton onClick={continueHandler}>CONTINUE SHOPPING</TopButton>
           <TopTexts>
             <TopText>Shopping Bag(0)</TopText>
             <TopText>Your Wishlist (0)</TopText>
@@ -209,8 +211,8 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.cartItems.map((item,i)=>(
-            <Product>
+            {cart.cartItems.map((item, id)=>(
+            <Product key={id}>
               <ProductDetail>
                 <Image  src={item.img} />
                 <Details>
